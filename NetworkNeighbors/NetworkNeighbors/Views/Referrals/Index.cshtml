@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{ 
+    ViewBag.Title = "Referrals";
+}
+
+<div class="row">
+    <button id="facebookInvite" class="btn btn-primary" type="button">Invite Facebook Friends</button>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        var facebookAppID = "@System.Web.Configuration.WebConfigurationManager.AppSettings["FacebookAppID"]";
+        var userID = "@User.Identity.GetUserId()";
+    </script>
+
+    @Scripts.Render("~/Scripts/facebook.js")
+    @Scripts.Render("~/Scripts/Referrals/index.js")
+}
