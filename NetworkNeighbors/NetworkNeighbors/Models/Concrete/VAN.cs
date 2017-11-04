@@ -7,12 +7,14 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NetworkNeighbors.Models.Abstract;
 
-namespace NetworkNeighbors.Models
+namespace NetworkNeighbors.Models.Concrete
 {
-    public class VAN
+    public partial class Repository: IDataRepository
     {
-        private static string APIKey
+        #region VAN
+        private string VANAPIKey
         {
             get
             {
@@ -20,7 +22,7 @@ namespace NetworkNeighbors.Models
             }
         }
 
-        private static string APIUsername
+        private string VANAPIUsername
         {
             get
             {
@@ -28,7 +30,7 @@ namespace NetworkNeighbors.Models
             }
         }
 
-        private static string APIBaseUrl
+        private string VANAPIBaseUrl
         {
             get
             {
@@ -36,15 +38,15 @@ namespace NetworkNeighbors.Models
             }
         }
 
-        private static string APIRequest(string path, string method = "GET", object data = null, string dbMode = "0")
+        private string VANAPIRequest(string path, string method = "GET", object data = null, string dbMode = "0")
         {
             try
             {
-                string url = APIBaseUrl + path;
+                string url = VANAPIBaseUrl + path;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
                 request.Method = method;
                 request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(
-                    string.Format("{0}:{1}", APIUsername, APIKey + "|" + dbMode))));
+                    string.Format("{0}:{1}", VANAPIUsername, VANAPIKey + "|" + dbMode))));
                 if (request.Method == "POST" && data != null)
                 {
                     byte[] postBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
@@ -83,9 +85,11 @@ namespace NetworkNeighbors.Models
             return String.Empty;
         }
 
-        public static string Echo(string str)
+        public string VANEcho(string str)
         {
-            return APIRequest("/echoes", "POST", new { message = str });
+            return VANAPIRequest("/echoes", "POST", new { message = str });
         }
+
+        #endregion
     }
 }

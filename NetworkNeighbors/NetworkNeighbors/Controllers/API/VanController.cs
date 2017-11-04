@@ -7,12 +7,12 @@ using System.Web.Http;
 
 namespace NetworkNeighbors.Controllers.API
 {
-    public class VanController : ApiController
+    public class VanController : BaseController
     {
         [HttpGet]
         public string Echo (string str)
         {
-            return Models.VAN.Echo(str);
+            return db.VANEcho(str);
         }
     }
 }

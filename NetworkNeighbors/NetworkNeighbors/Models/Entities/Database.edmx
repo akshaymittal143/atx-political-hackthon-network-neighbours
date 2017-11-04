@@ -1,0 +1,256 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="NetworkNeighbors.Models.Entities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Referrals">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="referrer_voter_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="referred_voter_id" Type="char" MaxLength="36" Nullable="false" />
+          <Property Name="status_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Statuses">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Voters">
+          <Key>
+            <PropertyRef Name="voter_id" />
+          </Key>
+          <Property Name="first_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="dob" Type="date" />
+          <Property Name="email" Type="varchar(max)" />
+          <Property Name="phone" Type="varchar(max)" />
+          <Property Name="address_1" Type="varchar(max)" />
+          <Property Name="address_2" Type="varchar(max)" />
+          <Property Name="city" Type="varchar" MaxLength="50" />
+          <Property Name="state" Type="varchar" MaxLength="2" />
+          <Property Name="zip_code" Type="varchar" MaxLength="20" />
+          <Property Name="van_id" Type="varchar(max)" />
+          <Property Name="voter_id" Type="char" MaxLength="36" Nullable="false" />
+        </EntityType>
+        <Association Name="Referrals_Statuses_status_id_fk">
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+          <End Role="Referrals" Type="Self.Referrals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="Referrals">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Referrals_Voters_referred_voter_id_fk">
+          <End Role="Voters" Type="Self.Voters" Multiplicity="1" />
+          <End Role="Referrals" Type="Self.Referrals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voters">
+              <PropertyRef Name="voter_id" />
+            </Principal>
+            <Dependent Role="Referrals">
+              <PropertyRef Name="referred_voter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Referrals_Voters_referrer_voter_id_fk">
+          <End Role="Voters" Type="Self.Voters" Multiplicity="1" />
+          <End Role="Referrals" Type="Self.Referrals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voters">
+              <PropertyRef Name="voter_id" />
+            </Principal>
+            <Dependent Role="Referrals">
+              <PropertyRef Name="referrer_voter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NetworkNeighborsModelsEntitiesStoreContainer">
+          <EntitySet Name="Referrals" EntityType="Self.Referrals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Voters" EntityType="Self.Voters" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="Referrals_Statuses_status_id_fk" Association="Self.Referrals_Statuses_status_id_fk">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Referrals" EntitySet="Referrals" />
+          </AssociationSet>
+          <AssociationSet Name="Referrals_Voters_referred_voter_id_fk" Association="Self.Referrals_Voters_referred_voter_id_fk">
+            <End Role="Voters" EntitySet="Voters" />
+            <End Role="Referrals" EntitySet="Referrals" />
+          </AssociationSet>
+          <AssociationSet Name="Referrals_Voters_referrer_voter_id_fk" Association="Self.Referrals_Voters_referrer_voter_id_fk">
+            <End Role="Voters" EntitySet="Voters" />
+            <End Role="Referrals" EntitySet="Referrals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NetworkNeighbors.Models.Entities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Referral">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="referrer_voter_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="referred_voter_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="status_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Status" Relationship="Self.Referrals_Statuses_status_id_fk" FromRole="Referrals" ToRole="Statuses" />
+          <NavigationProperty Name="Voter" Relationship="Self.Referrals_Voters_referred_voter_id_fk" FromRole="Referrals" ToRole="Voters" />
+          <NavigationProperty Name="Voter1" Relationship="Self.Referrals_Voters_referrer_voter_id_fk" FromRole="Referrals" ToRole="Voters" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="status_id" />
+          </Key>
+          <Property Name="status_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="status1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Referrals" Relationship="Self.Referrals_Statuses_status_id_fk" FromRole="Statuses" ToRole="Referrals" />
+        </EntityType>
+        <EntityType Name="Voter">
+          <Key>
+            <PropertyRef Name="voter_id" />
+          </Key>
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="dob" Type="DateTime" Precision="0" />
+          <Property Name="email" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="address_1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="address_2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="city" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="state" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
+          <Property Name="zip_code" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="van_id" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="voter_id" Type="String" MaxLength="36" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Referrals" Relationship="Self.Referrals_Voters_referred_voter_id_fk" FromRole="Voters" ToRole="Referrals" />
+          <NavigationProperty Name="Referrals1" Relationship="Self.Referrals_Voters_referrer_voter_id_fk" FromRole="Voters" ToRole="Referrals" />
+        </EntityType>
+        <Association Name="Referrals_Statuses_status_id_fk">
+          <End Role="Statuses" Type="Self.Status" Multiplicity="1" />
+          <End Role="Referrals" Type="Self.Referral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Statuses">
+              <PropertyRef Name="status_id" />
+            </Principal>
+            <Dependent Role="Referrals">
+              <PropertyRef Name="status_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Referrals_Voters_referred_voter_id_fk">
+          <End Role="Voters" Type="Self.Voter" Multiplicity="1" />
+          <End Role="Referrals" Type="Self.Referral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voters">
+              <PropertyRef Name="voter_id" />
+            </Principal>
+            <Dependent Role="Referrals">
+              <PropertyRef Name="referred_voter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Referrals_Voters_referrer_voter_id_fk">
+          <End Role="Voters" Type="Self.Voter" Multiplicity="1" />
+          <End Role="Referrals" Type="Self.Referral" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Voters">
+              <PropertyRef Name="voter_id" />
+            </Principal>
+            <Dependent Role="Referrals">
+              <PropertyRef Name="referrer_voter_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NetworkNeighborsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Referrals" EntityType="Self.Referral" />
+          <EntitySet Name="Statuses" EntityType="Self.Status" />
+          <EntitySet Name="Voters" EntityType="Self.Voter" />
+          <AssociationSet Name="Referrals_Statuses_status_id_fk" Association="Self.Referrals_Statuses_status_id_fk">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Referrals" EntitySet="Referrals" />
+          </AssociationSet>
+          <AssociationSet Name="Referrals_Voters_referred_voter_id_fk" Association="Self.Referrals_Voters_referred_voter_id_fk">
+            <End Role="Voters" EntitySet="Voters" />
+            <End Role="Referrals" EntitySet="Referrals" />
+          </AssociationSet>
+          <AssociationSet Name="Referrals_Voters_referrer_voter_id_fk" Association="Self.Referrals_Voters_referrer_voter_id_fk">
+            <End Role="Voters" EntitySet="Voters" />
+            <End Role="Referrals" EntitySet="Referrals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NetworkNeighborsModelsEntitiesStoreContainer" CdmEntityContainer="NetworkNeighborsEntities">
+          <EntitySetMapping Name="Referrals">
+            <EntityTypeMapping TypeName="NetworkNeighbors.Models.Entities.Referral">
+              <MappingFragment StoreEntitySet="Referrals">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="referrer_voter_id" ColumnName="referrer_voter_id" />
+                <ScalarProperty Name="referred_voter_id" ColumnName="referred_voter_id" />
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Statuses">
+            <EntityTypeMapping TypeName="NetworkNeighbors.Models.Entities.Status">
+              <MappingFragment StoreEntitySet="Statuses">
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="status1" ColumnName="status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Voters">
+            <EntityTypeMapping TypeName="NetworkNeighbors.Models.Entities.Voter">
+              <MappingFragment StoreEntitySet="Voters">
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="dob" ColumnName="dob" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="address_1" ColumnName="address_1" />
+                <ScalarProperty Name="address_2" ColumnName="address_2" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="zip_code" ColumnName="zip_code" />
+                <ScalarProperty Name="van_id" ColumnName="van_id" />
+                <ScalarProperty Name="voter_id" ColumnName="voter_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
