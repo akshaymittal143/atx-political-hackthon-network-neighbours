@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace NetworkNeighbors.Models
+namespace NetworkNeighbors.ViewModels
 {
     public class IndexViewModel
     {
