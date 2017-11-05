@@ -34,5 +34,13 @@ function SendGoogleInvite() {
 }
 
 function SendTwitterInvite() {
-    alert("Coming soon!");
+    var link = "http://votewithfriends.griddlrapp.com//Referrals/Referral?ref=" + userID;
+
+    FB.ui({
+        method: "send",
+        link: link
+    }, function (response) {
+        console.log(response);
+    });
+
 }

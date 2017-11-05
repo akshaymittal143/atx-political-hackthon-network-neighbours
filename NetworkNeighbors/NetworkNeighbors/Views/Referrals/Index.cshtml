@@ -18,7 +18,12 @@
         var facebookAppID = "@System.Web.Configuration.WebConfigurationManager.AppSettings["FacebookAppID"]";
         var userID = "@User.Identity.GetUserId()";
     </script>
-
+    <script type="text/javascript">
+        var TwitterconsumerKey = "@System.Web.Configuration.WebConfigurationManager.AppSettings["TwitterconsumerKey"]";
+        var userID = "@User.Identity.GetUserId()";
+    </script>
     @Scripts.Render("~/Scripts/facebook.js")
+    @Scripts.Render("~/Scripts/twitter.js")
     @Scripts.Render("~/Scripts/Referrals/index.js")
+    
 }
