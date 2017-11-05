@@ -198,6 +198,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mappers\Mapper.cs" />
     <Compile Include="Models\Abstract\IDataRepository.cs" />
     <Compile Include="Models\Concrete\Repository.cs" />
     <Compile Include="Models\Entities\Database.Context.cs">

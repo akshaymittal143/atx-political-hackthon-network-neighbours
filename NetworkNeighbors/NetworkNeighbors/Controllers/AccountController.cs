@@ -7,8 +7,10 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using NetworkNeighbors.DTOs.VAN;
+using NetworkNeighbors.Mappers;
 using NetworkNeighbors.Models;
 using NetworkNeighbors.Models.Concrete;
+using NetworkNeighbors.Models.Entities;
 using NetworkNeighbors.ViewModels;
 
 namespace NetworkNeighbors.Controllers
@@ -163,22 +165,15 @@ namespace NetworkNeighbors.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     // Check if a user is already registered in VAN; it not, create a record for them
-                    PersonDTO person = new PersonDTO()
+                    
+                    // Might need to change the model passed into this API call in order to get more data for matching
+                    Voter voter = new Voter()
                     {
-                        firstName = "Daniel",
-                        lastName = "Wehrle",
-                        emails = new List<EmailDTO>()
-                        {
-                            new EmailDTO()
-                            {
-                                email = "dj.wehrle@gmail.com"
-                            }
-                        }
+                        email = model.Email
                     };
 
-                    if (await RegisterInVANAsync(person))
+                    if (await RegisterInVANAsync(voter))
                     {
-                        // TODO: Save VAN ID
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -400,22 +395,15 @@ namespace NetworkNeighbors.Controllers
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                         // Check if a user is already registered in VAN; it not, create a record for them
-                        PersonDTO person = new PersonDTO()
+                        
+                        // Might need to change the model passed into this API call in order to get more data for matching
+                        Voter voter = new Voter()
                         {
-                            firstName = "Daniel",
-                            lastName = "Wehrle",
-                            emails = new List<EmailDTO>()
-                        {
-                            new EmailDTO()
-                            {
-                                email = "dj.wehrle@gmail.com"
-                            }
-                        }
+                            email = model.Email
                         };
 
-                        if (await RegisterInVANAsync(person))
+                        if (await RegisterInVANAsync(voter))
                         {
-                            // TODO: Save VAN ID
                             return RedirectToLocal(returnUrl);
                         }
                         else
@@ -499,9 +487,13 @@ namespace NetworkNeighbors.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private async Task<bool> RegisterInVANAsync(PersonDTO person)
+        private async Task<bool> RegisterInVANAsync(Voter voter)
         {
+            bool registered = false;
+            
             // Check if a user is already registered in VAN; it not, create a record for them
+
+            PersonDTO person = Mapper.MapPersonDTO(voter);
 
             Repository repo = new Repository();
             MatchResponse response = await repo.FindOrCreatePersonInVANAsync(person);
@@ -511,7 +503,15 @@ namespace NetworkNeighbors.Controllers
                         Statuses.UnmatchedStored.ToString()
                     };
 
-            return validStatuses.Contains(response.status);
+            if (validStatuses.Contains(response.status))
+            {
+                registered = true;
+
+                voter.van_id = response.vanId;
+                repo.SaveVoter(voter);
+            }
+
+            return registered;
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
