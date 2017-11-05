@@ -256,6 +256,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Database.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="Images\home.png" />
     <Content Include="Models\Entities\Database.edmx.diagram">
       <DependentUpon>Database.edmx</DependentUpon>
     </Content>
