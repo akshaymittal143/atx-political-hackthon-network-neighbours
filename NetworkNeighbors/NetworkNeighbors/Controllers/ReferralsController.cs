@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
 using System.Data.Linq;
-using NetworkNeighbors.Models.Abstract;
+using System;
+﻿using NetworkNeighbors.Models.Abstract;
 using NetworkNeighbors.Models.Concrete;
 using NetworkNeighbors.Models.Entities;
-using System;
 
 namespace NetworkNeighbors.Controllers
 {
@@ -71,6 +71,17 @@ namespace NetworkNeighbors.Controllers
 
         [Authorize]
         public ActionResult RegisterToVote()
+        {
+            return View();
+        }
+        [HttpGet]
+        public ViewResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ViewResult Referral(string userID)
         {
             return View();
         }
