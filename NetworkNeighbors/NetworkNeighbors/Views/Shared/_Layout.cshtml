@@ -13,6 +13,10 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
+            <div class="navbar-title">
+                <div class="icon">VWF</div>
+                <div class="title">#Vote with Friends</div>
+            </div>
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -27,7 +31,7 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     @if (Request.IsAuthenticated)
                     {
-                        <li>@Html.ActionLink("Create Registration", "CheckRegistration", "Referrals")</li>
+                        <li>@Html.ActionLink("Check My Registration", "CheckRegistration", "Referrals")</li>
                         <li>@Html.ActionLink("Refer Friends", "Index", "Referrals")</li>
 
                     }

@@ -62,7 +62,7 @@ namespace NetworkNeighbors.Models.Concrete
                         // insert new voter
                         db.Voters.Add(entity);
                     }
-                    if(db.SaveChanges() > 0)
+                    if (db.SaveChanges() > 0)
                     {
                         return entity.voter_id;
                     }
@@ -70,6 +70,13 @@ namespace NetworkNeighbors.Models.Concrete
             }
             catch(Exception ex)
             {
+                foreach (var e in db.GetValidationErrors())
+                {
+                    foreach(var e2 in e.ValidationErrors)
+                    {
+                        HttpContext.Current.Trace.Warn(e2.PropertyName + ": " + e2.ErrorMessage);
+                    }
+                }
                 HttpContext.Current.Trace.Warn(ex.ToString());
             }
             return null;

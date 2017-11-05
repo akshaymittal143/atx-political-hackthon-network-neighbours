@@ -129,3 +129,33 @@ h6,
     -ms-border-radius: 9px;
     border-radius: 9px;
 }
+
+div.navbar-title {
+    background-color: blue;
+    color: #ffffff;
+    width: 100%;
+    padding: 10px 20px;
+}
+
+div.icon {
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: #000000;
+    display: table;
+    padding: 5px 5px 2px 5px;
+    font-size: 10pt;
+    float: left;
+    margin-right: 20px;
+}
+
+div.navbar-title .title {
+    color: #ffffff;
+    font-size: 13pt;
+}
+
+@media (min-width: 1200px){
+    .container {
+        width: auto;
+        padding: 0px 0px;
+    }
+}
