@@ -1,5 +1,4 @@
 ﻿body {
-    font-size: 17px;
     padding-top: 90px;
     padding-bottom: 20px;
 }
@@ -8,6 +7,7 @@
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    margin-top: 40px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -64,10 +64,10 @@ span.field-validation-error {
         color: #000000;
     }
 
-    .navbar-inverse .navbar-nav > li > a:hover{
-        color: #000000;
-        text-decoration: underline;
-    }
+        .navbar-inverse .navbar-nav > li > a:hover {
+            color: #000000;
+            text-decoration: underline;
+        }
 
     .navbar-inverse .navbar-brand {
         color: #000000;
@@ -90,6 +90,10 @@ span.field-validation-error {
 
 .navbar-brand {
     font-weight: bold;
+}
+
+body {
+    font-size: 17px;
 }
 
 body,
@@ -174,36 +178,41 @@ div.navbar-title .title {
     font-size: 13pt;
 }
 
-div.navbar-title .title a{
-    color: #ffffff;
-}
+    div.navbar-title .title a {
+        color: #ffffff;
+    }
 
-.btn-default{
+.btn-default {
     background-color: #1D7CD6;
     color: #ffffff;
 }
 
-.navbar-inverse{
+.navbar-inverse {
     background-color: #efefef;
     color: #000000;
     font-size: 14px;
 }
 
-.navbar-nav > li > a{
+.navbar-nav > li > a {
     padding-top: 25px;
     padding-bottom: 25px;
 }
 
-.navbar-right{
+.navbar-right {
     margin-right: 0px;
 }
 
-.lead {
-    font-size: 18px;
-    font-weight: bold;
+.homeImage {
+    margin: auto;
+    text-align: center;
+    max-width: 1170px;
 }
 
-@media (min-width: 1200px){
+    .homeImage img {
+        max-width: 1170px;
+    }
+
+@media (min-width: 1200px) {
     .container {
         max-width: 1170px;
         padding: 0px 0px;

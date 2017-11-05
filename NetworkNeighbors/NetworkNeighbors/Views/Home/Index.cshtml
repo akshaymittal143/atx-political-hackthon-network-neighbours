@@ -2,12 +2,13 @@
     ViewBag.Title = "Home";
 }
 
-<!DOCTYPE html>
-<html>
-
-<body>
-     <div >             
-         <img src="~/Images/home.png" align="middle" alt="Home" class="home-page"/>           
-     </div>
-</body>
-</html>
+<div class="homeImage">
+    @if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        <img src="~/Images/lookup.png" align="middle" alt="Home" class="home-page" />
+    }
+    else
+    {
+        <img src="~/Images/home.png" align="middle" alt="Home" class="home-page" />
+    }
+</div>
