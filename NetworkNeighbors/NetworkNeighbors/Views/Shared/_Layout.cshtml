@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Engage your social networks to turn friends into voters." />
 
-    <title>@ViewBag.Title - Network Neighbors</title>
+    <title>@ViewBag.Title - Vote With Friends</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
@@ -19,7 +19,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Network Neighbors", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Vote With Friends", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -40,7 +40,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p class="pull-right">&copy; @DateTime.Now.Year - Network Neighbors</p>
+            <p class="pull-right">&copy; @DateTime.Now.Year - Vote With Friends</p>
         </footer>
     </div>
 
