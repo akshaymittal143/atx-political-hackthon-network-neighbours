@@ -1,7 +1,7 @@
-﻿using System.Web.Mvc;
-using NetworkNeighbors.Models.Abstract;
+﻿using NetworkNeighbors.Models.Abstract;
 using NetworkNeighbors.Models.Concrete;
 using NetworkNeighbors.Models.Entities;
+using System.Web.Mvc;
 
 namespace NetworkNeighbors.Controllers
 {
@@ -38,5 +38,18 @@ namespace NetworkNeighbors.Controllers
             return RedirectToAction("Index", "Referrals");
 
         }
+        [HttpGet]
+        public ViewResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ViewResult Referral(string userID)
+        {
+            return View();
+        }
+
+
     }
 }
