@@ -1,7 +1,9 @@
-﻿using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using NetworkNeighbors.Models.Entities;
+using System.Data.Entity;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace NetworkNeighbors.Models
 {
@@ -19,6 +21,7 @@ namespace NetworkNeighbors.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Voter> Voters { get; set; }
         public ApplicationDbContext()
             : base("NetworkNeighbors", throwIfV1Schema: false)
         {
