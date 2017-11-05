@@ -6,7 +6,7 @@
     <meta name="description" content="Engage your social networks to turn friends into voters." />
 
     <title>@ViewBag.Title - Network Neighbors</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -23,12 +23,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+
                     <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @if (Request.IsAuthenticated)
                     {
+                        <li>@Html.ActionLink("Create Registration", "CheckRegistration", "Referrals")</li>
                         <li>@Html.ActionLink("Refer Friends", "Index", "Referrals")</li>
+
                     }
                 </ul>
                 @Html.Partial("_LoginPartial")

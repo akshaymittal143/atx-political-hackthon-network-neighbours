@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 90px;
     padding-bottom: 20px;
 }
 
@@ -21,4 +21,111 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+
+span.field-validation-error {
+    color: red;
+    font-weight: bold;
+}
+
+.voffset {
+    margin-top: 2px;
+}
+
+.voffset1 {
+    margin-top: 5px;
+}
+
+.voffset2 {
+    margin-top: 10px;
+}
+
+.voffset3 {
+    margin-top: 20px;
+}
+
+.voffset4 {
+    margin-top: 30px;
+}
+
+.voffset5 {
+    margin-top: 40px;
+}
+/*    Bootstrap Overrides */
+
+.navbar-inverse {
+    background-color: cornflowerblue;
+    border-color: darkblue;
+}
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: azure;
+    }
+
+    .navbar-inverse .navbar-brand {
+        color: azure;
+    }
+
+    .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+        background-color: cornflowerblue;
+        background-color: rgba(205, 40, 39, 0.55);
+    }
+
+.dropdown-menu {
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.navbar-inverse .navbar-nav > .dropdown > a .caret {
+    border-bottom-color: #ffffff;
+    border-top-color: #ffffff;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+body {
+    font-size: 17px;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    font-family: Nunito, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    height: 44px;
+    font-size: 17px;
+    -ms-border-radius: 9px;
+    border-radius: 9px;
+}
+
+    .form-control:focus {
+        border-color: #2196f3;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+.btn {
+    padding: 7px 20px;
+    font-size: 17px;
+    -ms-border-radius: 9px;
+    border-radius: 9px;
 }
