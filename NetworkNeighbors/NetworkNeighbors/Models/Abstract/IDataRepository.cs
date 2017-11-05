@@ -11,12 +11,14 @@ namespace NetworkNeighbors.Models.Abstract
         Task<string> VANEchoAsync(string str);
         Task<MatchResponse> FindOrCreatePersonInVANAsync(PersonDTO person);
         Task<MatchResponse> FindPersonInVANAsync(PersonDTO person);
+        Task<Voter> GetPersonInVANAsync(string vanID);
         #endregion
 
         #region Voters
         IQueryable<Voter> Voters { get; }
         string SaveVoter(Voter entity);
         bool DeleteVoter(string id);
+        Task<Voter> CheckVoterAsync(Voter entity);
         #endregion
     }
 }

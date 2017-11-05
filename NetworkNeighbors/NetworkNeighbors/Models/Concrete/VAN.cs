@@ -7,7 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using NetworkNeighbors.DTOs.VAN;
 using NetworkNeighbors.Models.Abstract;
+using NetworkNeighbors.Models.Entities;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace NetworkNeighbors.Models.Concrete
 {
@@ -55,6 +58,38 @@ namespace NetworkNeighbors.Models.Concrete
 
             return response;
 
+        }
+
+        public async Task<Voter> GetPersonInVANAsync(string vanID)
+        {
+            try
+            {
+                string result = await VANAPIRequestAsync("people/" + vanID, HttpMethod.Get);
+                JObject json = JObject.Parse(result);
+                if(Helpers.SafeJsonString(json, "vanId") == vanID)
+                {
+                    var voter = new Voter
+                    {
+                        first_name = Helpers.SafeJsonString(json, "firstName"),
+                        last_name = Helpers.SafeJsonString(json, "lastName")
+                    };
+                    JToken addressObj = json["addresses"].First;
+                    if(addressObj != null)
+                    {
+                        voter.address_1 = Helpers.SafeJsonString(addressObj, "addressLine1");
+                        voter.address_2 = Helpers.SafeJsonString(addressObj, "addressLine2");
+                        voter.city = Helpers.SafeJsonString(addressObj, "city");
+                        voter.state = Helpers.SafeJsonString(addressObj, "stateOrProvince");
+                        voter.zip_code = Helpers.SafeJsonString(addressObj, "zipOrPostalCode");
+                    }
+                    return voter;
+                }
+            }
+            catch(Exception ex)
+            {
+                HttpContext.Current.Trace.Warn(ex.ToString());
+            }
+            return null;
         }
 
         private string VANAPIKey

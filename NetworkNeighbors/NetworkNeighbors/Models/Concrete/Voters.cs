@@ -2,6 +2,11 @@
 using System.Linq;
 using System.Data;
 using System.Web;
+using System.Threading.Tasks;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Linq;
+using NetworkNeighbors.DTOs.VAN;
 using NetworkNeighbors.Models.Abstract;
 using NetworkNeighbors.Models.Entities;
 
@@ -83,6 +88,50 @@ namespace NetworkNeighbors.Models.Concrete
                 HttpContext.Current.Trace.Warn(ex.ToString());
             }
             return false;
+        }
+
+        public async Task<Voter> CheckVoterAsync(Voter entity)
+        {
+            try
+            {
+                var dto = new NetworkNeighbors.DTOs.VAN.PersonDTO
+                {
+                    firstName = entity.first_name,
+                    lastName = entity.last_name
+                };
+                if (!String.IsNullOrEmpty(entity.email))
+                {
+                    dto.emails = new List<EmailDTO> { new EmailDTO { email = entity.email, isPreferred = true, isSubscribed = false, type = "personal" } };
+                }
+                if (!String.IsNullOrEmpty(entity.phone))
+                {
+                    dto.phones = new List<PhoneDTO> { new PhoneDTO { phoneNumber = entity.phone, isPreferred = true, phoneType = "personal" } };
+                }
+                if (!String.IsNullOrEmpty(entity.address_1) && !String.IsNullOrEmpty(entity.city) && !String.IsNullOrEmpty(entity.state) && !String.IsNullOrEmpty(entity.zip_code))
+                {
+                    dto.addresses = new List<AddressDTO> { new AddressDTO { addressLine1 = entity.address_1, addressLine2 = entity.address_2, city = entity.city, stateOrProvince = entity.state, zipOrPostalCode = entity.zip_code, isPreferred = true, type = "personal" } };
+                }
+                if (entity.dob.HasValue)
+                {
+                    dto.dateOfBirth = entity.dob.Value;
+                }
+                var match = await FindPersonInVANAsync(dto);
+                if(match != null)
+                {
+                    entity.van_id = match.vanId;
+                    entity.registration_status = match.status;
+                }
+                entity.voter_id = SaveVoter(entity);
+                if (!String.IsNullOrEmpty(entity.voter_id))
+                {
+                    return entity;
+                }
+            }
+            catch (Exception ex)
+            {
+                HttpContext.Current.Trace.Warn(ex.ToString());
+            }
+            return null;
         }
 
         #endregion 

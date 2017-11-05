@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 using System.Reflection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace NetworkNeighbors.Models
 {
@@ -58,6 +60,27 @@ namespace NetworkNeighbors.Models
             }
             catch { }
             return original;
+        }
+
+        public static string SafeJsonString(JToken obj, string key)
+        {
+            try
+            {
+                return (string)obj[key];
+            }
+            catch
+            {
+                try
+                {
+                    int val = (int)obj[key];
+                    return val.ToString();
+                }
+                catch (Exception ex)
+                {
+                    HttpContext.Current.Trace.Warn(key + ": " + ex.ToString());
+                    return "";
+                }
+            }
         }
     }
 }
