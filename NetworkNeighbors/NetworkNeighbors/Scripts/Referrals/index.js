@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 function SendFacebookInvite() {
 
-    var link = "https://" + window.location.host + "/Referrals/Referral?ref=" + userID;
+    var link = "http://votewithfriends.griddlrapp.com//Referrals/Referral?ref=" + userID;
     
     FB.ui({
         method: "send",
