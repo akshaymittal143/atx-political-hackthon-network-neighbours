@@ -1,0 +1,12 @@
+﻿.planning-question {
+    display: none;
+}
+
+#finish {
+    display: none;
+}
+
+#votingTime input,
+#votingTime p {
+    display: inline;
+}

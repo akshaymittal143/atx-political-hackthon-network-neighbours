@@ -1,4 +1,5 @@
 ﻿body {
+    font-size: 17px;
     padding-top: 90px;
     padding-bottom: 20px;
 }
@@ -89,10 +90,6 @@ span.field-validation-error {
 
 .navbar-brand {
     font-weight: bold;
-}
-
-body {
-    font-size: 17px;
 }
 
 body,
@@ -199,6 +196,11 @@ div.navbar-title .title a{
 
 .navbar-right{
     margin-right: 0px;
+}
+
+.lead {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 @media (min-width: 1200px){
