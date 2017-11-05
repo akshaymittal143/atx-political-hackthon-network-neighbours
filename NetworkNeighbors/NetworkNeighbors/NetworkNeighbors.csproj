@@ -192,7 +192,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\BaseController.cs" />
     <Compile Include="Controllers\API\VanController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReferralsController.cs" />
@@ -200,6 +199,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Mappers\Mapper.cs" />
+    <Compile Include="Migrations\201711041746252_InitialCreate.cs" />
+    <Compile Include="Migrations\201711041746252_InitialCreate.Designer.cs">
+      <DependentUpon>201711041746252_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711051541226_updated models.cs" />
+    <Compile Include="Migrations\201711051541226_updated models.Designer.cs">
+      <DependentUpon>201711051541226_updated models.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abstract\IDataRepository.cs" />
     <Compile Include="Models\Concrete\Repository.cs" />
     <Compile Include="Models\Entities\Database.Context.cs">
@@ -344,6 +352,14 @@
       <Project>{9c4fc369-3cae-426f-a604-3403eee7879a}</Project>
       <Name>NetworkNeighbors.DTOs</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711041746252_InitialCreate.resx">
+      <DependentUpon>201711041746252_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711051541226_updated models.resx">
+      <DependentUpon>201711051541226_updated models.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,12 +1,12 @@
-﻿using System.Web.Http;
-using NetworkNeighbors.Models.Abstract;
+﻿using NetworkNeighbors.Models.Abstract;
 using NetworkNeighbors.Models.Concrete;
+using System.Web.Http;
 
 namespace NetworkNeighbors.Controllers.API
 {
-    public class BaseController : ApiController
+    public class ApiBaseController : ApiController
     {
-        public BaseController()
+        public ApiBaseController()
         {
             db = new Repository();
         }

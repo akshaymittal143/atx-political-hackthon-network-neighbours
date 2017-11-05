@@ -9,9 +9,10 @@
 
 namespace NetworkNeighbors.Models.Entities
 {
-    using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     public partial class Status
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -19,10 +20,11 @@ namespace NetworkNeighbors.Models.Entities
         {
             this.Referrals = new HashSet<Referral>();
         }
-    
+        [Key]
+        [Column(Order = 2)]
         public int status_id { get; set; }
         public string status1 { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Referral> Referrals { get; set; }
     }

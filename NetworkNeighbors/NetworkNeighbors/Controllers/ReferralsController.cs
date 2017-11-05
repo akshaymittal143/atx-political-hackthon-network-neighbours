@@ -1,16 +1,17 @@
-﻿using NetworkNeighbors.Models;
+﻿using NetworkNeighbors.Models.Abstract;
+using NetworkNeighbors.Models.Concrete;
 using NetworkNeighbors.Models.Entities;
-using NetworkNeighbors.ViewModels;
 using System.Web.Mvc;
 
 namespace NetworkNeighbors.Controllers
 {
-    public class ReferralsController : BaseController
+    public class ReferralsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private IDataRepository db;
+
         public ReferralsController()
         {
-            _context = new ApplicationDbContext();
+            db = new Repository();
         }
 
         [HttpGet]
@@ -50,7 +51,5 @@ namespace NetworkNeighbors.Controllers
             return View();
         }
 
-
-        
     }
 }

@@ -11,6 +11,8 @@ namespace NetworkNeighbors.Models.Entities
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     public partial class Voter
     {
@@ -32,6 +34,8 @@ namespace NetworkNeighbors.Models.Entities
         public string state { get; set; }
         public string zip_code { get; set; }
         public string van_id { get; set; }
+        [Key]
+        [Column(Order = 1)]
         public string voter_id { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

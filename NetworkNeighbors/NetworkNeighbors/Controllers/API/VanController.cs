@@ -4,7 +4,7 @@ using System.Web.Http;
 namespace NetworkNeighbors.Controllers.API
 {
     [RoutePrefix("api/Van")]
-    public class VanController : BaseController
+    public class VanController : ApiBaseController
     {
         [Route("Echo")]
         [HttpGet]
