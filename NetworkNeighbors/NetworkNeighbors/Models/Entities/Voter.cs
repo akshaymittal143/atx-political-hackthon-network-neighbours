@@ -11,7 +11,7 @@ namespace NetworkNeighbors.Models.Entities
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Voter
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -20,7 +20,7 @@ namespace NetworkNeighbors.Models.Entities
             this.Referrals = new HashSet<Referral>();
             this.Referrals1 = new HashSet<Referral>();
         }
-    
+
         public string first_name { get; set; }
         public string last_name { get; set; }
         public Nullable<System.DateTime> dob { get; set; }
@@ -33,7 +33,7 @@ namespace NetworkNeighbors.Models.Entities
         public string zip_code { get; set; }
         public string van_id { get; set; }
         public string voter_id { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Referral> Referrals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

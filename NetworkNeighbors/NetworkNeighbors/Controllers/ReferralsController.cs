@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace NetworkNeighbors.Controllers
 {
-    public class ReferralsController : Controller
+    public class ReferralsController : BaseController
     {
         private readonly ApplicationDbContext _context;
         public ReferralsController()
@@ -25,6 +25,25 @@ namespace NetworkNeighbors.Controllers
             return View();
         }
 
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CheckRegistration(Voter entity)
+        {
+            string voter_id = db.SaveVoter(entity);
+            if (!string.IsNullOrEmpty(voter_id))
+            {
+                // good
+            }
+            else
+            {
+                // bad
+            }
+
+            return RedirectToAction("Mine", "Gigs");
+
+        }
+
         [HttpGet]
         public ViewResult Referral(string userID)
         {
@@ -32,30 +51,6 @@ namespace NetworkNeighbors.Controllers
         }
 
 
-        [Authorize]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(VoterViewModel viewModel)
-        {
-
-            var vote = new Voter
-            {
-                first_name = viewModel.FirstName,
-                last_name = viewModel.LastName,
-                dob = viewModel.DOB,
-                email = viewModel.Email,
-                phone = viewModel.Phone,
-                address_1 = viewModel.Address1,
-                address_2 = viewModel.Address2,
-                city = viewModel.City,
-                state = viewModel.State,
-                zip_code = viewModel.ZipCode
-            };
-            _context.Voters.Add(vote);
-            _context.SaveChanges();
-
-            return RedirectToAction("Mine", "Gigs");
-
-        }
+        
     }
 }
