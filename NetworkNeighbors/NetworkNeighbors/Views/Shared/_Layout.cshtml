@@ -8,7 +8,10 @@
     <title>@ViewBag.Title - Vote With Friends</title>
 
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+
     @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -30,6 +33,7 @@
                     {
                         <li>@Html.ActionLink("Create Registration", "CheckRegistration", "Referrals")</li>
                         <li>@Html.ActionLink("Refer Friends", "Index", "Referrals")</li>
+                        <li>@Html.ActionLink("Make a Plan", "Index", "Planning")</li>
 
                     }
                 </ul>

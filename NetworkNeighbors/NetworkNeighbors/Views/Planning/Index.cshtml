@@ -1,0 +1,176 @@
+﻿@{
+    ViewBag.Title = "Planning";
+}
+
+@section styles
+{
+    @Styles.Render("~/Content/Planning/index.css")
+}
+
+<h1>THE PLAN</h1>
+<h3>Getting prepared for the election season</h3>
+
+<div class="box planning-question" data-question="1">
+    <p class="lead">1 How do you plan to vote?</p>
+    <div class="form-group">
+        <p>Will you be voting</p>
+        <label class="radio-inline">
+            <input id="votingMethodInPerson" name="votingMethod" class="votingMethod" type="radio" value="inPerson" />in person?
+        </label>
+        <label class="radio-inline">
+            <input id="votingMethodByMail" name="votingMethod" class="votingMethod" type="radio" value="absentee" />by absentee ballot?
+        </label>
+    </div>
+    <button class="btn btn-primary next" type="button">Next</button>
+</div>
+
+@* Workflow 1 *@
+<div class="box planning-question" data-workflow="1" data-question="2">
+    <p class="lead">2 When do you plan to vote?</p>
+    <div class="form-group">
+        <p class="question">What day will you vote?</p>
+        <label class="radio-inline">
+            <input id="votingDayEarly" name="votingDay" type="radio" value="early" />Early?
+        </label>
+        <label class="radio-inline">
+            <input id="votingDayElectionDay" name="votingDay" type="radio" value="electionDay" />on election day
+        </label>
+    </div>
+    <div id="votingDateForm" class="form-group">
+        <p class="question">What time will you vote?</p>
+        <div id="votingTime">
+            <input class="form-control" type="date" />
+            <input class="form-control" type="time" />
+            <p> to </p>
+            <input class="form-control" type="time" />
+        </div>
+    </div>
+    <div>Your friend is going at this time...</div>
+    <button class="btn btn-primary next" type="button">Next</button>
+</div>
+
+<div class="box planning-question" data-workflow="1" data-question="3">
+    <div class="row">
+        <div id="locationQuestions" class="col-md-6">
+            <p class="lead">3 Where would you like to vote?</p>
+            <div class="form-group">
+                <p class="question">Location</p>
+                <label class="radio-inline">
+                    <input id="locationHome" name="location" type="radio" value="home" />close to my house
+                </label>
+                <label class="radio-inline">
+                    <input id="locationWork" name="location" type="radio" value="work" />close to my office
+                </label>
+            </div>
+            <div class="form-group">
+                <p class="question">Enter the address</p>
+                <input id="address" name="address" class="form-control" type="text" />
+                <button id="lookupLocations" class="btn btn-default" type="button">Lookup Locations</button>
+            </div>
+            <div>Need a ride?</div>
+            <button class="btn btn-primary next" type="button">Next</button>
+        </div>
+        <div id="map" class="col-md-6"></div>
+    </div>
+</div>
+
+<div class="box planning-question" data-workflow="1" data-question="4">
+    <p class="lead">4 New Voter ID Requirements for Texas Voters</p>
+
+    <p><strong>Seven approved Forms of Photo ID</strong></p>
+    <p>With the exception of the U.S. citizenship certificate, the approved photo ID must be current or have expired no more than four years before being presented for voter qualification at the polling place.</p>
+
+    <ul>
+        <li>Texas Driver License issued by the Texas Department of Public Safety (DPS)</li>
+        <li>Texas Election Identification Certificate (EIC) issued by DPS</li>
+        <li>Texas Personal Identification Card issued by DPS</li>
+        <li>Texas License to Carry a Handgun (LTC) issued by DPS</li>
+        <li>U.S. Military ID Card containing the person's photograph</li>
+        <li>U.S. Citizenship Certificate containing the person's photograph</li>
+        <li>U.S. Passport</li>
+    </ul>
+
+    <p>Supporting documentation can be:</p>
+
+    <ul>
+        <li>Valid Voter Registration Certificate</li>
+        <li>Certified Birth Certificate (must be an original)</li>
+        <li>Copy of an original current utility bill</li>
+        <li>Copy of an original bank statement</li>
+        <li>Copy of an original government check</li>
+        <li>Copy of an original paycheck</li>
+        <li>Copy of an original government document with your name and an address (original required if it contains a photograph)</li>
+    </ul>
+
+    <button class="btn btn-primary next" type="button">Finish</button>
+</div>
+
+@* Workflow 2 *@
+<div class="box planning-question" data-workflow="2" data-question="2">
+    <p class="lead">2 Absentee: Ballot by Mail</p>
+
+    <p><strong>Who can vote by mail?</strong></p>
+    <p>You are eligible to vote early by mail if you are a registered voter who is:</p>
+    <ul>
+        <li>65 years of age or older</li>
+        <li>Out of the country during the entire election period</li>
+        <li>Sick or disabled</li>
+        <li>Confined in jail but eligible to vote</li>
+    </ul>
+
+    <p><strong>How do I get a vote?</strong></p>
+    <p>To vote by mail, you must first apply for a ballot. The Travis County Clerks office does not send out applications or ballots without a specific request from the voter.</p>
+
+    <p><strong>We must receive your application no earlier than January 1st of the year in which the election is held and no later than the close of business 11 days before election day.</strong></p>
+
+    <p>If the deadline falls on a weekend, the last day to submit an application is the preceding Friday. If the deadline falls on a state or federal holiday, the ballot application must be received on the preceding business day.</p>
+
+    <button class="btn btn-primary next" type="button">Next</button>
+</div>
+
+<div class="box planning-question" data-workflow="2" data-question="3">
+    <p class="lead">3 New Voter ID Requirements for Texas Voters</p>
+
+    <p><strong>Seven approved Forms of Photo ID</strong></p>
+    <p>With the exception of the U.S. citizenship certificate, the approved photo ID must be current or have expired no more than four years before being presented for voter qualification at the polling place.</p>
+
+    <ul>
+        <li>Texas Driver License issued by the Texas Department of Public Safety (DPS)</li>
+        <li>Texas Election Identification Certificate (EIC) issued by DPS</li>
+        <li>Texas Personal Identification Card issued by DPS</li>
+        <li>Texas License to Carry a Handgun (LTC) issued by DPS</li>
+        <li>U.S. Military ID Card containing the person's photograph</li>
+        <li>U.S. Citizenship Certificate containing the person's photograph</li>
+        <li>U.S. Passport</li>
+    </ul>
+
+    <p>Supporting documentation can be:</p>
+
+    <ul>
+        <li>Valid Voter Registration Certificate</li>
+        <li>Certified Birth Certificate (must be an original)</li>
+        <li>Copy of an original current utility bill</li>
+        <li>Copy of an original bank statement</li>
+        <li>Copy of an original government check</li>
+        <li>Copy of an original paycheck</li>
+        <li>Copy of an original government document with your name and an address (original required if it contains a photograph)</li>
+    </ul>
+
+    <button class="btn btn-primary next" type="button">Finish</button>
+</div>
+
+<div id="finish">
+    <p>All set!</p>
+</div>
+
+@section scripts
+{
+    @* Google SDK for JavaScript *@
+    <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=load"></script>
+
+    <script type="text/javascript">
+        var googleAPIKey = "@System.Web.Configuration.WebConfigurationManager.AppSettings["GoogleAPIKey"]";
+    </script>
+
+    @Scripts.Render("~/Scripts/Planning/index.js")
+}
