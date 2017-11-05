@@ -41,7 +41,7 @@ namespace NetworkNeighbors.Controllers
                 // bad
             }
 
-            return RedirectToAction("Mine", "Gigs");
+            return RedirectToAction("Index", "Referrals");
 
         }
 
