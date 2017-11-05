@@ -121,12 +121,13 @@ namespace NetworkNeighbors.Models.Concrete
             try
             {
                 string url = VANAPIBaseUrl + path;
+                HttpContext.Current.Trace.Warn("url: " + url);
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
                 request.Method = method.ToString();
                 request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.ASCII.GetBytes(
                     string.Format("{0}:{1}", VANAPIUsername, VANAPIKey + "|" + dbMode))));
 
-                if (request.Method == "POST" && data != null)
+                if (method == HttpMethod.Post && data != null)
                 {
                     byte[] postBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
                     request.ContentType = "application/json";

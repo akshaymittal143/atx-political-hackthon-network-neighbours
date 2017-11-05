@@ -108,15 +108,15 @@ namespace NetworkNeighbors.Models.Concrete
                 };
                 if (!String.IsNullOrEmpty(entity.email))
                 {
-                    dto.emails = new List<EmailDTO> { new EmailDTO { email = entity.email, isPreferred = true, isSubscribed = false, type = "personal" } };
+                    dto.emails = new List<EmailDTO> { new EmailDTO { email = entity.email } };
                 }
                 if (!String.IsNullOrEmpty(entity.phone))
                 {
-                    dto.phones = new List<PhoneDTO> { new PhoneDTO { phoneNumber = entity.phone, isPreferred = true, phoneType = "personal" } };
+                    dto.phones = new List<PhoneDTO> { new PhoneDTO { phoneNumber = entity.phone } };
                 }
                 if (!String.IsNullOrEmpty(entity.address_1) && !String.IsNullOrEmpty(entity.city) && !String.IsNullOrEmpty(entity.state) && !String.IsNullOrEmpty(entity.zip_code))
                 {
-                    dto.addresses = new List<AddressDTO> { new AddressDTO { addressLine1 = entity.address_1, addressLine2 = entity.address_2, city = entity.city, stateOrProvince = entity.state, zipOrPostalCode = entity.zip_code, isPreferred = true, type = "personal" } };
+                    dto.addresses = new List<AddressDTO> { new AddressDTO { addressLine1 = entity.address_1, addressLine2 = entity.address_2, city = entity.city, stateOrProvince = entity.state, zipOrPostalCode = entity.zip_code } };
                 }
                 if (entity.dob.HasValue)
                 {

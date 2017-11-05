@@ -55,20 +55,25 @@ span.field-validation-error {
 /*    Bootstrap Overrides */
 
 .navbar-inverse {
-    background-color: dodgerblue;
+    background-color: #1D7CD6;
     border-color: darkblue;
 }
 
     .navbar-inverse .navbar-nav > li > a {
-        color: azure;
+        color: #000000;
+    }
+
+    .navbar-inverse .navbar-nav > li > a:hover{
+        color: #000000;
+        text-decoration: underline;
     }
 
     .navbar-inverse .navbar-brand {
-        color: azure;
+        color: #000000;
     }
 
     .navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
-        background-color: dodgerblue;
+        background-color: #1D7CD6;
         background-color: rgba(205, 40, 39, 0.55);
     }
 
@@ -110,6 +115,25 @@ h6,
     margin-bottom: 20px;
 }
 
+select {
+    display: block;
+    width: 100%;
+    height: 44px;
+    padding: 6px 12px;
+    font-size: 17px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 9px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
 .form-control {
     height: 44px;
     font-size: 17px;
@@ -131,7 +155,7 @@ h6,
 }
 
 div.navbar-title {
-    background-color: blue;
+    background-color: #1D7CD6;
     color: #ffffff;
     width: 100%;
     padding: 10px 20px;
@@ -153,14 +177,33 @@ div.navbar-title .title {
     font-size: 13pt;
 }
 
-.btn-default{
-    background-color: dodgerblue;
+div.navbar-title .title a{
     color: #ffffff;
+}
+
+.btn-default{
+    background-color: #1D7CD6;
+    color: #ffffff;
+}
+
+.navbar-inverse{
+    background-color: #efefef;
+    color: #000000;
+    font-size: 14px;
+}
+
+.navbar-nav > li > a{
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.navbar-right{
+    margin-right: 0px;
 }
 
 @media (min-width: 1200px){
     .container {
-        width: auto;
+        max-width: 1170px;
         padding: 0px 0px;
     }
 }

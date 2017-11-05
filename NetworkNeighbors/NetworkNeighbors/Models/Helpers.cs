@@ -113,8 +113,6 @@ namespace NetworkNeighbors.Models
 
         private static bool IsSelected(string itemValue, string defaultValue)
         {
-            HttpContext.Current.Trace.Warn("Value:" + itemValue);
-            HttpContext.Current.Trace.Warn("Default:" + defaultValue);
             if (itemValue == defaultValue)
             {
                 return true;
