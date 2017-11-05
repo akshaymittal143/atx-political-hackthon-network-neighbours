@@ -2,7 +2,7 @@
 
 namespace NetworkNeighbors.Controllers
 {
-    [RequireHttps]
+    //[RequireHttps]
     public class HomeController : Controller
     {
         public ViewResult Index()
