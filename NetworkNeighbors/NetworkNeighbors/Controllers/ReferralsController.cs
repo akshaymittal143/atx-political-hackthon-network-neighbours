@@ -31,6 +31,7 @@ namespace NetworkNeighbors.Controllers
                     voter_id = User.Identity.Name
                 };
             }
+            ViewBag.state = Models.Helpers.GetStateSelectList(entity.state, "--SELECT STATE--");
             return View(entity);
         }
 
@@ -56,6 +57,7 @@ namespace NetworkNeighbors.Controllers
             else
             {
                 // bad
+                ViewBag.state = Models.Helpers.GetStateSelectList(entity.state, "--SELECT STATE--");
                 ViewBag.Messages = "Sorry, a problem occurred while checking your registration.";
                 return View(entity);
             }
