@@ -1,7 +1,7 @@
 ﻿using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(NetworkNeighbors.Startup))]
+[assembly: OwinStartup(typeof(NetworkNeighbors.Startup))]
 namespace NetworkNeighbors
 {
     public partial class Startup

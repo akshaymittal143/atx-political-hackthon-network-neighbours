@@ -1,19 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System.Threading.Tasks;
+using NetworkNeighbors.DTOs.VAN;
 using NetworkNeighbors.Models.Abstract;
+using Newtonsoft.Json;
 
 namespace NetworkNeighbors.Models.Concrete
 {
     public partial class Repository: IDataRepository
     {
         #region VAN
+
+        /// <summary>
+        /// Sends a message to VAN that is returned.
+        /// </summary>
+        /// <param name="str">Message to send</param>
+        /// <returns>Message received from VAN</returns>
+        public Task<string> VANEchoAsync(string str)
+        {
+            return VANAPIRequestAsync("echoes", HttpMethod.Post, new { message = str });
+        }
+
+        /// <summary>
+        /// Checks the VAN to see if a certain person is registered; if not, they are added to it.
+        /// </summary>
+        /// <param name="person">Person to find or create</param>
+        /// <returns>Whether the person was found in the VAN</returns>
+        public async Task<MatchResponse> FindOrCreatePersonInVANAsync(PersonDTO person)
+        {
+            MatchResponse response = new MatchResponse();
+            const string path = "people/findOrCreate";
+
+            response = JsonConvert.DeserializeObject<MatchResponse>(await VANAPIRequestAsync(path, HttpMethod.Post, person));
+
+            return response;
+
+        }
+
+        /// <summary>
+        /// Checks the VAN to see if a certain person is registered.
+        /// </summary>
+        /// <param name="person">Person to find</param>
+        /// <returns>Whether the person was found in the VAN</returns>
+        public async Task<MatchResponse> FindPersonInVANAsync(PersonDTO person)
+        {
+            MatchResponse response = new MatchResponse();
+            const string path = "people/find";
+
+            response = JsonConvert.DeserializeObject<MatchResponse>(await VANAPIRequestAsync(path, HttpMethod.Post, person));
+
+            return response;
+
+        }
+
         private string VANAPIKey
         {
             get
@@ -26,7 +69,7 @@ namespace NetworkNeighbors.Models.Concrete
         {
             get
             {
-                return Helpers.GetConfig("VanApiUsername", "38dd0ae3-fb26-d842-751e-92ce6f18a7b5");
+                return Helpers.GetConfig("VanApiUsername", "api.atx.hack.team11");
             }
         }
 
@@ -34,31 +77,33 @@ namespace NetworkNeighbors.Models.Concrete
         {
             get
             {
-                return Helpers.GetConfig("VanApiBaseUrl", "https://api.securevan.com/v4");
+                return Helpers.GetConfig("VanApiBaseUrl", "https://api.securevan.com/v4/");
             }
         }
 
-        private string VANAPIRequest(string path, string method = "GET", object data = null, string dbMode = "0")
+        private async Task<string> VANAPIRequestAsync(string path, HttpMethod method, object data = null, string dbMode = "0")
         {
             try
             {
                 string url = VANAPIBaseUrl + path;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(new Uri(url));
-                request.Method = method;
-                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(
+                request.Method = method.ToString();
+                request.Headers.Add("Authorization", "Basic " + Convert.ToBase64String(Encoding.ASCII.GetBytes(
                     string.Format("{0}:{1}", VANAPIUsername, VANAPIKey + "|" + dbMode))));
+
                 if (request.Method == "POST" && data != null)
                 {
-                    byte[] postBytes = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
+                    byte[] postBytes = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(data));
                     request.ContentType = "application/json";
                     request.ContentLength = postBytes.Length;
                     var stream = request.GetRequestStream();
                     stream.Write(postBytes, 0, postBytes.Length);
                     stream.Close();
                 }
+
                 try
                 {
-                    WebResponse response = request.GetResponse();
+                    WebResponse response = await request.GetResponseAsync();
                     using (var resStream = response.GetResponseStream())
                     {
                         using (var reader = new StreamReader(resStream))
@@ -82,12 +127,8 @@ namespace NetworkNeighbors.Models.Concrete
             {
                 HttpContext.Current.Trace.Warn(ex.ToString());
             }
-            return String.Empty;
-        }
 
-        public string VANEcho(string str)
-        {
-            return VANAPIRequest("/echoes", "POST", new { message = str });
+            return string.Empty;
         }
 
         #endregion

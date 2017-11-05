@@ -6,6 +6,14 @@ $(document).ready(function() {
         SendFacebookInvite();
     });
 
+    $("#googleInvite").click(function () {
+        SendGoogleInvite();
+    });
+
+    $("#twitterInvite").click(function () {
+        SendTwitterInvite();
+    });
+
 });
 
 function SendFacebookInvite() {
@@ -19,4 +27,12 @@ function SendFacebookInvite() {
         console.log(response);
     });
     
+}
+
+function SendGoogleInvite() {
+    alert("Coming soon!");
+}
+
+function SendTwitterInvite() {
+    alert("Coming soon!");
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using System.Collections.Specialized;
+using NetworkNeighbors.DTOs.VAN;
 using NetworkNeighbors.Models.Entities;
 
 namespace NetworkNeighbors.Models.Abstract
@@ -11,7 +8,9 @@ namespace NetworkNeighbors.Models.Abstract
     public interface IDataRepository
     {
         #region VAN
-        string VANEcho(string str);
+        Task<string> VANEchoAsync(string str);
+        Task<MatchResponse> FindOrCreatePersonInVANAsync(PersonDTO person);
+        Task<MatchResponse> FindPersonInVANAsync(PersonDTO person);
         #endregion
 
         #region Voters

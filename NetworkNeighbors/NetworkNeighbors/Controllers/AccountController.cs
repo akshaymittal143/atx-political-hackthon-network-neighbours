@@ -1,11 +1,14 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using NetworkNeighbors.DTOs.VAN;
 using NetworkNeighbors.Models;
+using NetworkNeighbors.Models.Concrete;
 using NetworkNeighbors.ViewModels;
 
 namespace NetworkNeighbors.Controllers
@@ -13,9 +16,6 @@ namespace NetworkNeighbors.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
-
         public AccountController()
         {
         }
@@ -149,20 +149,45 @@ namespace NetworkNeighbors.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user, model.Password);
+                ApplicationUser user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    // Check if a user is already registered in VAN; it not, create a record for them
+                    PersonDTO person = new PersonDTO()
+                    {
+                        firstName = "Daniel",
+                        lastName = "Wehrle",
+                        emails = new List<EmailDTO>()
+                        {
+                            new EmailDTO()
+                            {
+                                email = "dj.wehrle@gmail.com"
+                            }
+                        }
+                    };
+
+                    if (await RegisterInVANAsync(person))
+                    {
+                        // TODO: Save VAN ID
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        // TODO: Error
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
+
                 AddErrors(result);
             }
 
@@ -373,7 +398,31 @@ namespace NetworkNeighbors.Controllers
                     if (result.Succeeded)
                     {
                         await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
+
+                        // Check if a user is already registered in VAN; it not, create a record for them
+                        PersonDTO person = new PersonDTO()
+                        {
+                            firstName = "Daniel",
+                            lastName = "Wehrle",
+                            emails = new List<EmailDTO>()
+                        {
+                            new EmailDTO()
+                            {
+                                email = "dj.wehrle@gmail.com"
+                            }
+                        }
+                        };
+
+                        if (await RegisterInVANAsync(person))
+                        {
+                            // TODO: Save VAN ID
+                            return RedirectToLocal(returnUrl);
+                        }
+                        else
+                        {
+                            // TODO: Error
+                            return RedirectToLocal(returnUrl);
+                        }
                     }
                 }
                 AddErrors(result);
@@ -450,6 +499,21 @@ namespace NetworkNeighbors.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        private async Task<bool> RegisterInVANAsync(PersonDTO person)
+        {
+            // Check if a user is already registered in VAN; it not, create a record for them
+
+            Repository repo = new Repository();
+            MatchResponse response = await repo.FindOrCreatePersonInVANAsync(person);
+
+            string[] validStatuses = new string[] {
+                        Statuses.Matched.ToString(),
+                        Statuses.UnmatchedStored.ToString()
+                    };
+
+            return validStatuses.Contains(response.status);
+        }
+
         internal class ChallengeResult : HttpUnauthorizedResult
         {
             public ChallengeResult(string provider, string redirectUri)
@@ -479,5 +543,8 @@ namespace NetworkNeighbors.Controllers
             }
         }
         #endregion
+
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
     }
 }
