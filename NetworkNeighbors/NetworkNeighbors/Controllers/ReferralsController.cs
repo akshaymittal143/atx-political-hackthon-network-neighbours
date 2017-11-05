@@ -65,8 +65,8 @@ namespace NetworkNeighbors.Controllers
         public async Task<ActionResult> Verify()
         {
             var voter = db.Voters.Where(n => n.voter_id == User.Identity.Name).FirstOrDefault();
-            var vanVoter = await db.GetPersonInVANAsync(voter.van_id);
-            return View(voter);
+            var entity = await db.GetPersonInVANAsync(voter.van_id);
+            return View(entity);
         }
 
         [Authorize]

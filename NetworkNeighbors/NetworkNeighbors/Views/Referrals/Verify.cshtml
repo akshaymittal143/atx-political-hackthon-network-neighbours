@@ -1,0 +1,25 @@
+﻿@model NetworkNeighbors.Models.Entities.Voter
+
+@{
+    ViewBag.Title = "Verify Your Information";
+
+}
+
+<h2>Verify Your Information</h2>
+
+<p>It looks like you are registered to vote. Here is the address you are registered for. If this doesn't look right, please update your registration.</p>
+
+<p>
+    @Model.address_1
+    @if (!String.IsNullOrEmpty(Model.address_2))
+    {
+        <br />@Model.address_2
+    }
+    <br />@Model.city, @Model.state @Model.zip_code
+</p>
+
+<a href="https://www.votetravis.com/vexpress/display.do">Update My Registration</a>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
