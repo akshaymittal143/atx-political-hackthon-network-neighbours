@@ -62,10 +62,7 @@ namespace NetworkNeighbors.Models.Concrete
                         // insert new voter
                         db.Voters.Add(entity);
                     }
-                    if (db.SaveChanges() > 0)
-                    {
-                        return entity.voter_id;
-                    }
+                    return entity.voter_id;
                 }
             }
             catch(Exception ex)
@@ -101,32 +98,40 @@ namespace NetworkNeighbors.Models.Concrete
         {
             try
             {
-                var dto = new NetworkNeighbors.DTOs.VAN.PersonDTO
+                try
                 {
-                    firstName = entity.first_name,
-                    lastName = entity.last_name
-                };
-                if (!String.IsNullOrEmpty(entity.email))
-                {
-                    dto.emails = new List<EmailDTO> { new EmailDTO { email = entity.email } };
+                    // Requests to VAN have been failing - appears to be offline. So if requests doesn't work, for now let's treat as unregistered
+                    var dto = new NetworkNeighbors.DTOs.VAN.PersonDTO
+                    {
+                        firstName = entity.first_name,
+                        lastName = entity.last_name
+                    };
+                    if (!String.IsNullOrEmpty(entity.email))
+                    {
+                        dto.emails = new List<EmailDTO> { new EmailDTO { email = entity.email } };
+                    }
+                    if (!String.IsNullOrEmpty(entity.phone))
+                    {
+                        dto.phones = new List<PhoneDTO> { new PhoneDTO { phoneNumber = entity.phone } };
+                    }
+                    if (!String.IsNullOrEmpty(entity.address_1) && !String.IsNullOrEmpty(entity.city) && !String.IsNullOrEmpty(entity.state) && !String.IsNullOrEmpty(entity.zip_code))
+                    {
+                        dto.addresses = new List<AddressDTO> { new AddressDTO { addressLine1 = entity.address_1, addressLine2 = entity.address_2, city = entity.city, stateOrProvince = entity.state, zipOrPostalCode = entity.zip_code } };
+                    }
+                    if (entity.dob.HasValue)
+                    {
+                        dto.dateOfBirth = entity.dob.Value;
+                    }                
+                    var match = await FindPersonInVANAsync(dto);
+                    if (match != null)
+                    {
+                        entity.van_id = match.vanId;
+                        entity.registration_status = match.status;
+                    }
                 }
-                if (!String.IsNullOrEmpty(entity.phone))
+                catch (Exception ex)
                 {
-                    dto.phones = new List<PhoneDTO> { new PhoneDTO { phoneNumber = entity.phone } };
-                }
-                if (!String.IsNullOrEmpty(entity.address_1) && !String.IsNullOrEmpty(entity.city) && !String.IsNullOrEmpty(entity.state) && !String.IsNullOrEmpty(entity.zip_code))
-                {
-                    dto.addresses = new List<AddressDTO> { new AddressDTO { addressLine1 = entity.address_1, addressLine2 = entity.address_2, city = entity.city, stateOrProvince = entity.state, zipOrPostalCode = entity.zip_code } };
-                }
-                if (entity.dob.HasValue)
-                {
-                    dto.dateOfBirth = entity.dob.Value;
-                }
-                var match = await FindPersonInVANAsync(dto);
-                if(match != null)
-                {
-                    entity.van_id = match.vanId;
-                    entity.registration_status = match.status;
+                    HttpContext.Current.Trace.Warn(ex.ToString());
                 }
                 entity.voter_id = SaveVoter(entity);
                 if (!String.IsNullOrEmpty(entity.voter_id))
